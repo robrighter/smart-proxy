@@ -1,3 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////
+//  SMART PROXY 
+//  Much of this code was taken from the socks proxy by @gvangool:
+//  https://github.com/gvangool/node-socks
+//
+//  Smart Proxy adds support for middleware and some general restructuring 
+///////////////////////////////////////////////////////////////////////////////
+
 var net = require('net'),
 	util = require('util'),
 	log = function(args) {
@@ -9,39 +17,37 @@ var net = require('net'),
 	SOCKS_VERSION = 5,
 	
 	info = function(){};
-/*
- * Authentication methods
- ************************
- * o  X'00' NO AUTHENTICATION REQUIRED
- * o  X'01' GSSAPI
- * o  X'02' USERNAME/PASSWORD
- * o  X'03' to X'7F' IANA ASSIGNED
- * o  X'80' to X'FE' RESERVED FOR PRIVATE METHODS
- * o  X'FF' NO ACCEPTABLE METHODS
- */
+
+//Authentication methods
+// X'00' NO AUTHENTICATION REQUIRED
+// X'01' GSSAPI
+// X'02' USERNAME/PASSWORD
+// X'03' to X'7F' IANA ASSIGNED
+// X'80' to X'FE' RESERVED FOR PRIVATE METHODS
+// X'FF' NO ACCEPTABLE METHODS
+
 	AUTHENTICATION = {
 		NOAUTH: 0x00,
 		GSSAPI: 0x01,
 		USERPASS: 0x02,
 		NONE: 0xFF
 	},
-/*
- * o  CMD
- *    o  CONNECT X'01'
- *    o  BIND X'02'
- *    o  UDP ASSOCIATE X'03'
- */
+//CMD
+//  CONNECT X'01'
+//  BIND X'02'
+//  UDP ASSOCIATE X'03'
+
 	REQUEST_CMD = {
 		CONNECT: 0x01,
 		BIND: 0x02,
 		UDP_ASSOCIATE: 0x03
 	},
-/*
- * o  ATYP   address type of following address
- *    o  IP V4 address: X'01'
- *    o  DOMAINNAME: X'03'
- *    o  IP V6 address: X'04'
- */
+
+//ATYP   address type of following address
+//  IP V4 address: X'01'
+//  DOMAINNAME: X'03'
+//  IP V6 address: X'04'
+
 	ATYP = {
 		IP_V4: 0x01,
 		DNS: 0x03,
