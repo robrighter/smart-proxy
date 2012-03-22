@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+var smart = require('./smart-proxy.js');
+
+// Create server
+var HOST='127.0.0.1',
+	PORT='8888',
+	server = smart.createServer(smart.middleware.protocol);
+
+server.on('error', function (e) {
+	console.error('SERVER ERROR: %j', e);
+});
+server.listen(PORT, HOST);
